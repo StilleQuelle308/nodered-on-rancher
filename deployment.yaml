@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nodered
+  name: nodered
+  namespace: nodered
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodered
+  template:
+    metadata:
+      labels:
+        app: nodered
+    spec:
+      containers:
+      - name: nodered
+        image: nodered/node-red:latest
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
+        ports:
+        - containerPort: 1880
+        volumeMounts:
+        - name: nodered-claim
+          mountPath: /data
+      initContainers:
+      - name: take-data-dir-ownership
+        image: alpine:3
+        command:
+        - chown
+        - -R
+        - 1000:1000
+        - /data
+        volumeMounts:
+        - name: nodered-claim
+          mountPath: /data
+      volumes:
+      - name: nodered-claim
+        persistentVolumeClaim:
+          claimName: nodered-pvc
+  

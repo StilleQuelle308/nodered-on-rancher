@@ -1,0 +1,31 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nodered-pv  # Sets PV's name
+  labels:
+    type: local  # Sets PV's type to local
+    app: nodered
+  namespace: nodered
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi # Sets PV Volume
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/nodered"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nodered-pvc  # Sets name of PVC
+  labels:
+    app: nodered
+  namespace: nodered
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany  # Sets read and write access
+  resources:
+    requests:
+      storage: 2Gi  # Sets volume size

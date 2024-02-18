@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodered
+  namespace: nodered
+  labels:
+    app: nodered # Labels and Selectors
+spec:
+  type: NodePort # Sets service type
+  ports:
+    - port: 1880 # Sets port to run the mysql application
+  selector:
+    app: nodered
