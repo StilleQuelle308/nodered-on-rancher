@@ -38,3 +38,16 @@ You can customize Node-RED deployment parameters in the deployment.yaml file, su
 ### Persistent Volume Configuration
 The nodered-pv-pvc.yaml file defines a hostPath PersistentVolume. Update the path field to specify the host directory you want to mount within the Node-RED pod.
 
+## Cleanup
+To remove Node-RED deployment and associated resources, run:
+
+```bash
+kubectl delete -k .
+```
+
+## Contributing
+Feel free to contribute to this project by submitting issues or pull requests.
+
+## License
+This project is licensed under the Apache 2 License.
+
